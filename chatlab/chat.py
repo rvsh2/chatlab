@@ -345,8 +345,8 @@ class Chat:
             await self.submit(stream=stream, **kwargs)
             return
 
-        if finish_reason == "tool_calls":
-            self.append(assistant_tool_calls(tool_arguments))
+        if finish_reason == "tool_calls" and tool_arguments:
+            assistant_tool_calls(tool_arguments)
             for tool_argument in tool_arguments:
                 # Oh crap I need to append the big assistant call of it too. May have to assume we've done it by here.
                 function_called = await tool_argument.call(self.function_registry)
